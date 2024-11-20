@@ -7,12 +7,14 @@
 Focus Modes App is a productivity tool that helps users stay focused on their tasks by using features like Pomodoro Timer, Distraction Blocking, Focus Modes, and Progress Tracking.
 
 ## What problems does Focus Modes App solve?
+
 - Phone addiction
 - Focus on important work
 - Free from distractions
 - Peace of mind
 
 ## Powered by
+
 -  Kotlin
 -  Jetpack Compose
 -  Android Studio
@@ -72,12 +74,14 @@ View detailed statistics and graphs showing completed Pomodoro sessions, focus t
 3. Build and run the app on an Android emulator or device.
 
 ## Permissions
+
 The app requests the following permissions:
 1. Display Over Other Apps (to show blocking overlay).
 2. Usage Access (to detect app usage).
 3. Notification Access (to block notification)
 
 ## Contributing
+
 We welcome contributions to enhance the Focus Modes App. To contribute:
 1. Fork the repository.
 2. Create a new branch:
@@ -100,4 +104,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 
 ## Acknowledgments
+
 Thank you for checking out Focus Modes App! 🎉 Stay productive and focused!
