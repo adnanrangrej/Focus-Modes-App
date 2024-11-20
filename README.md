@@ -1,13 +1,28 @@
 # Focus Modes App
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/adnanrangrej/Focus-Modes-App/refs/heads/main/app/src/main/ic_launcher-playstore.png" height=200/>
+</p>
+
 Focus Modes App is a productivity tool that helps users stay focused on their tasks by using features like Pomodoro Timer, Distraction Blocking, Focus Modes, and Progress Tracking.
+
+## What problems does Focus Modes App solve?
+- Phone addiction
+- Focus on important work
+- Free from distractions
+- Peace of mind
+
+## Powered by
+-  Kotlin
+-  Jetpack Compose
+-  Android Studio
 
 ## Features
 
 ### 1. Pomodoro Timer
 A customizable timer that divides work into intervals (e.g., 25 minutes of work followed by 5 minutes of break), encouraging short, focused work sessions.
 
-<img src="screenshots/pomodoro_timer.jpg" width="400" />
+<img src="screenshots/pomodoro_timer.jpg" width="300" />
 
 ---
 
@@ -18,31 +33,31 @@ Predefined modes such as:
 - **Reading**: Blocks distractions for peaceful reading.
 - **Custom Mode**: Users can create their own focus mode.
 
-<img src="screenshots/focus_modes.jpg" width="400" />
+<img src="screenshots/focus_modes.jpg" width="300" />
 
 #### Custom Mode Creation
 Create and customize focus modes by selecting specific apps to block.
 
-<img src="screenshots/create_custom_mode.jpg" width="400" />
+<img src="screenshots/create_custom_mode.jpg" width="300" />
 
 #### App Selection
 Select which apps to block for each mode.
 
-<img src="screenshots/select_apps.jpg" width="400" />
+<img src="screenshots/select_apps.jpg" width="300" />
 
 ---
 
 ### 3. Distraction Blocking
 When a blocked app is opened, a motivational message appears instead of the app.
 
-<img src="screenshots/app_blocked.jpg" width="400" />
+<img src="screenshots/app_blocked.jpg" width="300" />
 
 ---
 
 ### 4. Progress Tracking
 View detailed statistics and graphs showing completed Pomodoro sessions, focus times, and streaks.
 
-<img src="screenshots/progress.jpg" width="400" />
+<img src="screenshots/progress.jpg" width="300" />
 
 ---
 
