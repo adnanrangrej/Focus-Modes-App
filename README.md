@@ -80,7 +80,9 @@ git push origin feature-name
 5. Create a pull request.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 
 ## Acknowledgments
 Thank you for checking out Focus Modes App! 🎉 Stay productive and focused!
