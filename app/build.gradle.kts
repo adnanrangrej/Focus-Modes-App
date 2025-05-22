@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp") version "2.0.21-1.0.27"
+    alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.compose.compiler)
 }
 
@@ -12,14 +12,11 @@ android {
     defaultConfig {
         applicationId = "com.example.focusmodes"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -40,13 +37,13 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.6"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    repositories {
+        google()       // For Android dependencies
+        mavenCentral() // General dependencies
+        maven {
+            setUrl("https://jitpack.io")
         }
     }
 }
@@ -60,9 +57,28 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    // Navigation
     implementation(libs.androidx.navigation.compose)
+
+    // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Gson
     implementation(libs.gson)
+
+    // Chart
+    implementation(libs.mpandroidchart)
+
+    // Icons
+    implementation(libs.androidx.material.icons.extended)
+
+    // room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
@@ -70,15 +86,4 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-    //Chart
-    implementation(libs.mpandroidchart)
-
-    //Icons
-    implementation(libs.androidx.material.icons.extended)
-
-    //room
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
 }
