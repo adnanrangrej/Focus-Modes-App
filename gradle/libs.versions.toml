@@ -1,22 +1,22 @@
 [versions]
 agp = "8.10.0"
-kotlin = "2.0.21"
-core-ktx = "1.15.0"
 kotlin = "2.1.10"
+core-ktx = "1.16.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.2.1"
 espresso-core = "3.6.1"
-lifecycle-runtime-ktx = "2.8.7"
-activity-compose = "1.9.3"
-compose-bom = "2024.11.00"
-material-icons-extended = "1.7.5"
+lifecycle-runtime-ktx = "2.9.0"
+activity-compose = "1.10.1"
+compose-bom = "2025.05.01"
+material-icons-extended = "1.7.8"
 mpandroidchart = "v3.1.0"
-navigation-compose = "2.8.4"
-lifecycle-viewmodel-compose = "2.8.7"
-gson = "2.10.1"
-room-ktx = "2.6.1"
-room-compiler = "2.6.1"
-room-runtime = "2.6.1"
+navigation-compose = "2.9.0"
+lifecycle-viewmodel-compose = "2.9.0"
+gson = "2.13.1"
+room-ktx = "2.7.1"
+room-compiler = "2.7.1"
+room-runtime = "2.7.1"
+ksp = "2.1.10-1.0.31"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -45,6 +45,6 @@ mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.27" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
