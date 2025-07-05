@@ -15,8 +15,8 @@ activityCompose = "1.10.1"
 composeBom = "2025.06.01"
 roomRuntime = "2.7.2"
 ksp = "2.2.0-2.0.2"
-navigation3 = "1.0.0-alpha04"
-lifecycleViewmodelNav3 = "1.0.0-alpha02"
+navigation3 = "1.0.0-alpha05"
+lifecycleViewmodelNav3 = "1.0.0-alpha03"
 materialIconsExtended = "1.7.8"
 
 [libraries]
