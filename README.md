@@ -13,9 +13,6 @@ showcasing a clean, reactive, and robust architecture.
 
 ## 📸 Screenshots & Demo
 
-*[**IMPORTANT:
-** Replace this section with a screen recording GIF or a few high-quality screenshots of your app in action.]*
-
 <p align="center">
   <img src="screenshots/Blocking_overlay.jpg" width="250" />
   <img src="screenshots/Focus_modes.jpg" width="250" />
