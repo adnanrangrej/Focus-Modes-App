@@ -105,3 +105,6 @@ This project was built entirely with the new **Jetpack Navigation 3**.
 4. Build and run the app.
 
 ## 📄 License
+Licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+MIT © 2025 Md Adnan
