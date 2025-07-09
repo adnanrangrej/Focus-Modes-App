@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
@@ -19,6 +18,7 @@ import com.github.adnanrangrej.focusmodes.domain.usecase.modes.ObserveFocusModeA
 import com.github.adnanrangrej.focusmodes.domain.usecase.modes.SetFocusModeActiveUseCase
 import com.github.adnanrangrej.focusmodes.ui.blockingoverlay.BlockingOverlay
 import com.github.adnanrangrej.focusmodes.ui.blockingoverlay.OverlayLifecycleOwner
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusModesTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -155,7 +155,7 @@ class AppBlockerService : AccessibilityService() {
                 setViewTreeSavedStateRegistryOwner(owner)
             }
             setContent {
-                MaterialTheme {
+                FocusModesTheme {
                     BlockingOverlay(
                         blockedAppIcon = appIcon,
                         blockedAppName = appName,
