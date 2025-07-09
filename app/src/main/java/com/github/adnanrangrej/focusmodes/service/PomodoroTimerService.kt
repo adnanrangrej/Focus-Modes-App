@@ -140,7 +140,7 @@ class PomodoroTimerService : Service() {
         return NotificationCompat.Builder(this, "TIMER_CHANNEL_ID")
             .setContentTitle("Pomodoro Timer")
             .setContentText("Timer remaining: $timerLeft")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_shield_notification)
             .setOngoing(true)
             .addAction(
                 if (isPaused) R.drawable.ic_play else R.drawable.ic_pause,
