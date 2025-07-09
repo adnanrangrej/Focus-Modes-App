@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Icon
@@ -32,6 +33,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
 
 @Composable
 fun PermissionsOnboardingScreen(
@@ -48,70 +52,78 @@ fun PermissionsOnboardingScreen(
 ) {
 
     Surface(
-        modifier = modifier
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(FocusTheme.spacing.large),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
 
+            Icon(
+                imageVector = Icons.Default.Shield,
+                contentDescription = "Permissions Shield",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(64.dp)
+            )
+
+            Spacer(Modifier.height(FocusTheme.spacing.large))
+
             Text(
                 text = "One Last Step!",
-                style = MaterialTheme.typography.headlineLarge,
+                style = FocusTypography.overlayTitle,
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.medium))
+
             Text(
                 text = "To provide the best focus experience, this app needs a few permissions to work correctly.",
-                style = MaterialTheme.typography.bodyLarge,
+                style = FocusTypography.permissionDescription,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Spacer(Modifier.height(48.dp))
-
-            PermissionChecklistItem(
-                icon = Icons.Default.Notifications,
-                title = "Notification Permission",
-                subtitle = "Required to show the timer in a notification.",
-                isGranted = isNotificationPermissionGranted,
-                onClick = onNotificationPermissionGranted
+                modifier = Modifier.padding(horizontal = FocusTheme.spacing.medium)
             )
 
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.huge))
 
-            PermissionChecklistItem(
-                icon = Icons.Default.TouchApp,
-                title = "Accessibility Service",
-                subtitle = "Required to detect which app you have opened.",
-                isGranted = isAccessibilityEnabled,
-                onClick = onAccessibilityEnabled
-            )
-
-            Spacer(Modifier.height(16.dp))
-
-            PermissionChecklistItem(
-                icon = Icons.Default.Visibility,
-                title = "Display Over Other Apps",
-                subtitle = "Required to show the blocking screen.",
-                isGranted = canDrawOverlay,
-                onClick = onCanDrawOverlay
-            )
-
-            if (isAutoStartAvailable) {
-                Spacer(Modifier.height(16.dp))
+            Column(verticalArrangement = Arrangement.spacedBy(FocusTheme.spacing.medium)) {
                 PermissionChecklistItem(
-                    icon = Icons.Default.Autorenew,
-                    title = "Enable Autostart",
-                    subtitle = "Needed for timers to work reliably on your device.",
-                    // We can't check this, so we assume it's not granted until clicked.
-                    isGranted = hasBeenGuidedToAutostart,
-                    onClick = onAutoStartClick
+                    icon = Icons.Default.Notifications,
+                    title = "Notification Permission",
+                    subtitle = "Required to show the timer in a notification.",
+                    isGranted = isNotificationPermissionGranted,
+                    onClick = onNotificationPermissionGranted
                 )
+
+                PermissionChecklistItem(
+                    icon = Icons.Default.TouchApp,
+                    title = "Accessibility Service",
+                    subtitle = "Required to detect which app you have opened.",
+                    isGranted = isAccessibilityEnabled,
+                    onClick = onAccessibilityEnabled
+                )
+
+                PermissionChecklistItem(
+                    icon = Icons.Default.Visibility,
+                    title = "Display Over Other Apps",
+                    subtitle = "Required to show the blocking screen.",
+                    isGranted = canDrawOverlay,
+                    onClick = onCanDrawOverlay
+                )
+
+                if (isAutoStartAvailable) {
+                    PermissionChecklistItem(
+                        icon = Icons.Default.Autorenew,
+                        title = "Enable Autostart",
+                        subtitle = "Needed for timers to work reliably on your device.",
+                        isGranted = hasBeenGuidedToAutostart,
+                        onClick = onAutoStartClick
+                    )
+                }
             }
         }
     }
@@ -126,7 +138,7 @@ fun PermissionChecklistItem(
     onClick: () -> Unit
 ) {
     val backgroundColor by animateColorAsState(
-        targetValue = if (isGranted) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f) else MaterialTheme.colorScheme.surfaceVariant,
+        targetValue = if (isGranted) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f) else MaterialTheme.colorScheme.surfaceContainerHigh,
         label = "BackgroundColorAnimation"
     )
     val contentColor by animateColorAsState(
@@ -137,15 +149,20 @@ fun PermissionChecklistItem(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.medium)
+            .clip(FocusComponentShapes.focusModeCard)
             .clickable(enabled = !isGranted, onClick = onClick)
-            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.medium),
-        color = backgroundColor
+            .border(
+                1.dp,
+                MaterialTheme.colorScheme.outlineVariant,
+                FocusComponentShapes.focusModeCard
+            ),
+        color = backgroundColor,
+        tonalElevation = FocusTheme.elevation.small
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(FocusTheme.spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(FocusTheme.spacing.medium)
         ) {
             Icon(
                 imageVector = icon,
@@ -162,7 +179,7 @@ fun PermissionChecklistItem(
                 )
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = FocusTypography.cardSubtitle,
                     color = contentColor
                 )
             }

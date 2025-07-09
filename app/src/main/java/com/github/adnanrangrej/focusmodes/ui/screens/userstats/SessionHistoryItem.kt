@@ -18,10 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.github.adnanrangrej.focusmodes.domain.model.Session
 import com.github.adnanrangrej.focusmodes.domain.model.SessionOutcome
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
+import com.github.adnanrangrej.focusmodes.ui.theme.focusColors
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -32,16 +35,20 @@ fun SessionHistoryItem(
     session: Session
 ) {
     val dateFormatter = remember { DateTimeFormatter.ofPattern("MMM d") }
+    val focusColors = MaterialTheme.focusColors()
 
-    Card(modifier = modifier.fillMaxWidth()) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = FocusComponentShapes.focusModeCard
+    ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(FocusTheme.spacing.medium),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val outcomeIcon =
                 if (session.sessionOutcome == SessionOutcome.COMPLETED) Icons.Default.CheckCircle else Icons.Default.HighlightOff
             val outcomeColor =
-                if (session.sessionOutcome == SessionOutcome.COMPLETED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
+                if (session.sessionOutcome == SessionOutcome.COMPLETED) focusColors.statsPositive else focusColors.blockedApp
 
             Icon(
                 imageVector = outcomeIcon,
@@ -49,25 +56,28 @@ fun SessionHistoryItem(
                 tint = outcomeColor,
                 modifier = Modifier.size(40.dp)
             )
-            Spacer(Modifier.width(16.dp))
+
+            Spacer(Modifier.width(FocusTheme.spacing.medium))
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = session.focusModeName ?: "Quick Timer",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
+                    style = FocusTypography.focusModeTitle
                 )
                 Text(
                     text = "Work: ${session.effectiveWorkDurationInSeconds.inWholeMinutes}m / ${session.plannedWorkDurationInSeconds.inWholeMinutes}m",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = FocusTypography.cardSubtitle,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     text = "Break: ${session.effectiveBreakDurationInSeconds.inWholeMinutes}m / ${session.plannedBreakDurationInSeconds.inWholeMinutes}m",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = FocusTypography.cardSubtitle,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            Spacer(Modifier.width(16.dp))
+
+            Spacer(Modifier.width(FocusTheme.spacing.medium))
+
             Text(
                 text = session.endTime?.let {
                     Instant.ofEpochSecond(it).atZone(ZoneId.systemDefault()).format(dateFormatter)

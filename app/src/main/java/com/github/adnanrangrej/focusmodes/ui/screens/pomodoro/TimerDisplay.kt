@@ -22,6 +22,9 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
+import com.github.adnanrangrej.focusmodes.ui.theme.ScreenThemes
 
 @Composable
 fun TimerDisplay(
@@ -30,10 +33,14 @@ fun TimerDisplay(
     statusText: String,
     isWorking: Boolean
 ) {
+
+    // Get the timer colors
+    val timerColors = ScreenThemes.timerColors()
+
     // Animate the color to transition smoothly between work and break states
     val indicatorColor by animateColorAsState(
-        targetValue = if (isWorking) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
-        animationSpec = tween(500),
+        targetValue = if (isWorking) timerColors["work"]!! else timerColors["shortBreak"]!!,
+        animationSpec = tween(FocusTheme.animation.medium),
         label = "ColorAnimation"
     )
 
@@ -41,7 +48,10 @@ fun TimerDisplay(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(300.dp)
-            .shadow(elevation = 24.dp, shape = CircleShape)
+            .shadow(
+                elevation = FocusTheme.elevation.extraLarge,
+                shape = CircleShape
+            )
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.surface)
     ) {
@@ -66,14 +76,11 @@ fun TimerDisplay(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = timeString,
-                style = MaterialTheme.typography.displayLarge.copy(
-                    fontSize = 72.sp,
-                    fontWeight = FontWeight.Light
-                )
+                style = FocusTypography.timerDisplay
             )
             Text(
                 text = statusText,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }

@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.github.adnanrangrej.focusmodes.ui.screens.modes.AppInfo
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
 
 @Composable
 fun FocusModeForm(
@@ -40,7 +45,8 @@ fun FocusModeForm(
     onBreakTimeChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
     onAppChange: (List<AppInfo>) -> Unit,
-    onConfirm: () -> Unit
+    onConfirm: () -> Unit,
+    confirmButtonText: String = "Create New Focus Mode"
 ) {
     var isAppSelectorOpen by rememberSaveable { mutableStateOf(false) }
 
@@ -50,41 +56,41 @@ fun FocusModeForm(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(FocusTheme.spacing.medium)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(FocusTheme.spacing.medium)
         ) {
+            // --- Focus Mode Name ---
             Text(
-                text = "Focus Mode Name"
+                text = "Focus Mode Name",
+                style = MaterialTheme.typography.titleSmall
             )
-            TextField(
+            OutlinedTextField(
                 value = name,
                 onValueChange = onNameChange,
-                placeholder = {
-                    Text("Enter a name")
-                },
+                label = { Text("e.g., Deep Work") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.small))
 
+            // --- Work and Break Time ---
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(FocusTheme.spacing.medium)
             ) {
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(FocusTheme.spacing.small)
                 ) {
                     Text(
-                        text = "Working Time"
+                        text = "Work Time (min)",
+                        style = MaterialTheme.typography.titleSmall
                     )
-                    TextField(
+                    OutlinedTextField(
                         value = workingTime,
                         onValueChange = onWorkingTimeChange,
-                        placeholder = {
-                            Text("Enter a time")
-                        },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.fillMaxWidth()
@@ -93,17 +99,15 @@ fun FocusModeForm(
 
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(FocusTheme.spacing.small)
                 ) {
                     Text(
-                        text = "Break Time"
+                        text = "Break Time (min)",
+                        style = MaterialTheme.typography.titleSmall
                     )
-                    TextField(
+                    OutlinedTextField(
                         value = breakTime,
                         onValueChange = onBreakTimeChange,
-                        placeholder = {
-                            Text("Enter a time")
-                        },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         modifier = Modifier.fillMaxWidth()
@@ -111,47 +115,60 @@ fun FocusModeForm(
                 }
             }
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.small))
 
+            // --- App Selection ---
             Button(
                 onClick = { isAppSelectorOpen = true },
+                shape = FocusComponentShapes.button,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Select Apps to Block (${selectedApps.size} selected)")
+                Text(
+                    "Select Apps to Block (${selectedApps.size} selected)",
+                    style = FocusTypography.primaryButton
+                )
             }
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.small))
 
+            // --- Description ---
             Text(
-                text = "Description"
+                text = "Description (Optional)",
+                style = FocusTypography.focusModeTitle
             )
-            TextField(
+            OutlinedTextField(
                 value = description,
                 onValueChange = onDescriptionChange,
-                placeholder = {
-                    Text("Enter a description")
-                },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = false,
-                maxLines = 3
+                label = { Text("What is this mode for?") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp),
+                singleLine = false
             )
-            Spacer(Modifier.height(8.dp))
 
+            // Spacer to push confirm button to the bottom
+            Spacer(Modifier.weight(1f))
+
+            // --- Confirm Button ---
             Button(
-                onClick = {
-                    onConfirm()
-                },
+                onClick = onConfirm,
                 enabled = canCreateMode,
-                modifier = Modifier.fillMaxWidth()
+                shape = FocusComponentShapes.button,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
             ) {
-                Text("Create New Focus Mode")
+                Text(
+                    text = confirmButtonText,
+                    style = FocusTypography.primaryButton
+                )
             }
         }
 
         if (isAppSelectorOpen) {
             AppSelectorWindow(
                 modifier = Modifier
-                    .heightIn(max = 400.dp)
+                    .padding(FocusTheme.spacing.medium)
                     .align(Alignment.Center),
                 appList = installedApps,
                 onDismissRequest = { isAppSelectorOpen = false },

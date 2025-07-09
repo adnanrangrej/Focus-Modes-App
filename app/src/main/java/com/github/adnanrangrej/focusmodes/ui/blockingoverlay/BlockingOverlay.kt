@@ -33,10 +33,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
 
 @Composable
 fun BlockingOverlay(
@@ -55,6 +57,7 @@ fun BlockingOverlay(
         label = "OverlayScaleAnimation"
     )
 
+    // Remember the converted bitmap to improve performance
     val bitmap = remember(blockedAppIcon) {
         blockedAppIcon.toBitmap().asImageBitmap()
     }
@@ -66,10 +69,8 @@ fun BlockingOverlay(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            // A semi-transparent background to dim the app behind it
             .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.9f))
-            // This empty, clickable modifier intercepts all touch events,
-            // effectively blocking interaction with the app underneath.
+            // This empty, clickable modifier intercepts all touch events
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
@@ -80,7 +81,7 @@ fun BlockingOverlay(
         Column(
             modifier = Modifier
                 .scale(scale) // Apply the pop-in animation
-                .padding(horizontal = 32.dp),
+                .padding(horizontal = FocusTheme.spacing.extraLarge),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -88,39 +89,45 @@ fun BlockingOverlay(
             Surface(
                 shape = CircleShape,
                 modifier = Modifier.size(96.dp),
-                color = MaterialTheme.colorScheme.surface
+                color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                tonalElevation = FocusTheme.elevation.medium
             ) {
                 Image(
                     bitmap = bitmap,
                     contentDescription = "$blockedAppName icon",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(FocusTheme.spacing.medium)
                         .clip(CircleShape)
                 )
             }
 
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.large))
 
             Text(
                 text = "Focus Mode is Active",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
+                style = FocusTypography.overlayTitle,
+                color = Color.White
             )
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.small))
 
             Text(
                 text = "$blockedAppName is currently blocked.",
-                style = MaterialTheme.typography.bodyLarge,
+                style = FocusTypography.overlayMessage,
                 color = Color.White.copy(alpha = 0.8f),
                 textAlign = TextAlign.Center
             )
 
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(FocusTheme.spacing.extraLarge))
 
-            Button(onClick = onGoBack) {
-                Text("Back to Focus")
+            Button(
+                onClick = onGoBack,
+                shape = FocusComponentShapes.button
+            ) {
+                Text(
+                    text = "Back to Focus",
+                    style = FocusTypography.primaryButton
+                )
             }
         }
     }

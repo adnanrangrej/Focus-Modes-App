@@ -19,12 +19,14 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
 
 @Composable
 fun TimerControls(
@@ -48,7 +50,7 @@ fun TimerControls(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
+                    .padding(horizontal = FocusTheme.spacing.extraLarge),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -63,7 +65,7 @@ fun TimerControls(
                 FloatingActionButton(
                     onClick = onPauseResumeClick,
                     modifier = Modifier.size(72.dp),
-                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 8.dp)
+                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = FocusTheme.elevation.large)
                 ) {
                     Icon(
                         imageVector = if (isRunning) Icons.Default.Pause else Icons.Default.PlayArrow,
@@ -84,9 +86,10 @@ fun TimerControls(
             // Show only the Start button when the timer is idle
             Button(
                 onClick = onStartClick,
+                shape = FocusComponentShapes.button,
                 modifier = Modifier
                     .height(56.dp)
-                    .fillMaxWidth(0.6f)
+                    .fillMaxWidth(0.7f)
             ) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
@@ -94,7 +97,7 @@ fun TimerControls(
                     modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text("Start Focus Session", style = MaterialTheme.typography.titleMedium)
+                Text("Start Focus Session", style = FocusTypography.primaryButton)
             }
         }
     }

@@ -30,7 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
 
 @Composable
 fun UserStatsScreen(
@@ -46,13 +48,13 @@ fun UserStatsScreen(
     } else {
         LazyColumn(
             modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            contentPadding = PaddingValues(FocusTheme.spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(FocusTheme.spacing.large)
         ) {
             item {
                 Text(
                     text = "Your Focus Stats",
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.displaySmall,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -60,7 +62,7 @@ fun UserStatsScreen(
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(FocusTheme.spacing.medium)
                 ) {
                     val focusHours = uiState.totalFocusTimeToday.inWholeHours
                     val focusMinutes = uiState.totalFocusTimeToday.inWholeMinutes % 60
@@ -102,25 +104,31 @@ fun UserStatsScreen(
                 item {
                     Column(
                         modifier = Modifier
-                            .padding(vertical = 32.dp)
+                            .padding(vertical = FocusTheme.spacing.huge)
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                        verticalArrangement = Arrangement.spacedBy(FocusTheme.spacing.medium)
                     ) {
                         Text(
                             text = "No sessions recorded yet. Start a timer to see your stats!",
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.bodyLarge
                         )
-                        // 3. The new button that appears only when the list is empty.
-                        Button(onClick = { viewModel.insertDummyData() }) {
+                        Button(
+                            onClick = { viewModel.insertDummyData() },
+                            shape = FocusComponentShapes.button
+                        ) {
                             Icon(imageVector = Icons.Default.Add, contentDescription = null)
                             Spacer(Modifier.width(ButtonDefaults.IconSpacing))
-                            Text("Generate Sample Data")
+                            Text(
+                                "Generate Sample Data",
+                                style = FocusTypography.primaryButton
+                            )
                         }
                     }
                 }
             } else {
-                items(uiState.recentSessions) { session ->
+                items(uiState.recentSessions, key = { it.id }) { session ->
                     SessionHistoryItem(session = session)
                 }
             }

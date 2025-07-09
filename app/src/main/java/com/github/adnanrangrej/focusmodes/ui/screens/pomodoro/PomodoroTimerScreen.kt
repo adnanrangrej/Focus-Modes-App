@@ -1,5 +1,6 @@
 package com.github.adnanrangrej.focusmodes.ui.screens.pomodoro
 
+import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
 
 @Composable
 fun PomodoroTimerScreen(
@@ -20,17 +22,19 @@ fun PomodoroTimerScreen(
 ) {
     val uiState by viewModel.uiState
 
-    // This calculation remains here, as it's derived from the state
+    // Calculate the progress based on the time remaining
     val targetProgress = if (uiState.totalTime > 0) {
         uiState.timeRemaining.toFloat() / uiState.totalTime.toFloat()
     } else {
         1f
     }
 
-    // The animation state also lives here
     val animatedProgress by animateFloatAsState(
         targetValue = targetProgress,
-        animationSpec = tween(durationMillis = 1000),
+        animationSpec = tween(
+            durationMillis = FocusTheme.animation.slow,
+            easing = LinearEasing // linear easing for a steady clock-like feel
+        ),
         label = "ProgressAnimation"
     )
 
@@ -42,14 +46,13 @@ fun PomodoroTimerScreen(
     ) {
         Spacer(Modifier.weight(1f))
 
-        // Pass only the necessary data down to the display component
         TimerDisplay(
             progress = animatedProgress,
             timeString = formatTime(uiState.timeRemaining),
             statusText = when {
-                !uiState.isRunning && !uiState.isPaused -> "Ready"
+                !uiState.isRunning && !uiState.isPaused -> "Ready to Focus?"
                 uiState.isWorking -> "Working"
-                !uiState.isWorking -> "Relaxing"
+                !uiState.isWorking -> "On a Break"
                 else -> "Paused"
             },
             isWorking = uiState.isWorking
@@ -57,7 +60,6 @@ fun PomodoroTimerScreen(
 
         Spacer(Modifier.weight(1f))
 
-        // Pass state and event lambdas down to the controls component
         TimerControls(
             isRunning = uiState.isRunning,
             isPaused = uiState.isPaused,
@@ -67,7 +69,7 @@ fun PomodoroTimerScreen(
             onStartClick = viewModel::startTimer
         )
 
-        Spacer(Modifier.height(48.dp))
+        Spacer(Modifier.height(FocusTheme.spacing.huge))
     }
 }
 

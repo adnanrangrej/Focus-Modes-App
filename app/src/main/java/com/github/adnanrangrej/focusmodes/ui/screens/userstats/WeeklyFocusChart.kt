@@ -19,20 +19,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
 
 @Composable
 fun WeeklyFocusChart(
     modifier: Modifier = Modifier,
     dailyFocusMinutes: List<Float>
 ) {
-    Card(modifier = modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp)) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = FocusComponentShapes.statsCard
+    ) {
+        Column(modifier = Modifier.padding(FocusTheme.spacing.medium)) {
             Text(
                 text = "Last 7 Days",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(Modifier.height(16.dp))
+
+            Spacer(Modifier.height(FocusTheme.spacing.medium))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -56,14 +63,14 @@ fun WeeklyFocusChart(
                                     .fillMaxHeight(value / maxVal)
                                     .background(
                                         MaterialTheme.colorScheme.primary,
-                                        shape = MaterialTheme.shapes.small
+                                        shape = FocusComponentShapes.chip
                                     )
                             )
                         }
                         Text(
                             text = days.getOrElse(index) { "" },
                             style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(top = 4.dp)
+                            modifier = Modifier.padding(top = FocusTheme.spacing.extraSmall)
                         )
                     }
                 }

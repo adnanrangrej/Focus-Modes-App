@@ -74,6 +74,7 @@ fun EditModeScreen(
                 )
             )
         },
-        canCreateMode = uiState.isEntryValid
+        canCreateMode = uiState.isEntryValid,
+        confirmButtonText = "Save Changes"
     )
 }

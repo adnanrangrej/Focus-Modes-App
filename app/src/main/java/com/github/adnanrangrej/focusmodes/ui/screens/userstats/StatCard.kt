@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -12,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusComponentShapes
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTheme
+import com.github.adnanrangrej.focusmodes.ui.theme.FocusTypography
 
 @Composable
 fun StatCard(
@@ -22,11 +25,15 @@ fun StatCard(
     label: String,
     value: String
 ) {
-    Card(modifier = modifier) {
+    Card(
+        modifier = modifier,
+        shape = FocusComponentShapes.statsCard,
+        elevation = CardDefaults.cardElevation(defaultElevation = FocusTheme.elevation.small)
+    ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(FocusTheme.spacing.medium),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(FocusTheme.spacing.small)
         ) {
             Icon(
                 imageVector = icon,
@@ -36,8 +43,7 @@ fun StatCard(
             )
             Text(
                 text = value,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
+                style = FocusTypography.statsNumber
             )
             Text(
                 text = label,
