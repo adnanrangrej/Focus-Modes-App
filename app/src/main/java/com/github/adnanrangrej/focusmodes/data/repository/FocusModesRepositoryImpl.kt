@@ -11,6 +11,7 @@ import com.github.adnanrangrej.focusmodes.domain.repository.FocusModesRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 class FocusModesRepositoryImpl(
@@ -52,6 +53,10 @@ class FocusModesRepositoryImpl(
 
     override fun getModeById(id: Long): Flow<FocusMode>? = dao.getModeById(id)?.map { mode ->
         mode.toDomainModel()
+    }
+
+    override suspend fun getModeSnapshot(id: Long): FocusMode? {
+        return dao.getModeById(id)?.firstOrNull()?.toDomainModel()
     }
 
     override fun getAllModes(): Flow<List<FocusMode>> = dao.getAllModes().map {

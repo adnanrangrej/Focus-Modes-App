@@ -13,10 +13,11 @@ interface FocusModesRepository {
 
     fun getModeById(id: Long): Flow<FocusMode>?
 
+    suspend fun getModeSnapshot(id: Long): FocusMode?
+
     fun getAllModes(): Flow<List<FocusMode>>
 
     fun setFocusModeActive(isActive: Boolean, focusModeId: Long?)
 
     fun getFocusModeId(): Long?
-
 }

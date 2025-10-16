@@ -22,6 +22,7 @@ object DatabaseModule {
             FocusModesDatabase::class.java,
             "focus_modes_database"
         )
+            .addMigrations(*FocusModesDatabase.Migrations.ALL)
             .fallbackToDestructiveMigration(false)
             .build()
     }
@@ -34,4 +35,7 @@ object DatabaseModule {
     @Singleton
     fun provideFocusModeDao(database: FocusModesDatabase) = database.focusModeDao()
 
+    @Provides
+    @Singleton
+    fun provideTriggerDao(database: FocusModesDatabase) = database.triggerDao()
 }

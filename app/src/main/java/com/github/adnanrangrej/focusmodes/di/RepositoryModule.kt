@@ -3,11 +3,15 @@ package com.github.adnanrangrej.focusmodes.di
 import android.content.Context
 import com.github.adnanrangrej.focusmodes.data.local.dao.ModesDao
 import com.github.adnanrangrej.focusmodes.data.local.dao.SessionDao
+import com.github.adnanrangrej.focusmodes.data.local.dao.TriggerDao
 import com.github.adnanrangrej.focusmodes.data.repository.FocusModesRepositoryImpl
 import com.github.adnanrangrej.focusmodes.data.repository.PomodoroTimerRepositoryImpl
+import com.github.adnanrangrej.focusmodes.data.repository.TriggersRepositoryImpl
 import com.github.adnanrangrej.focusmodes.data.repository.UserStatsRepositoryImpl
+import com.github.adnanrangrej.focusmodes.data.triggers.SmartTriggerScheduler
 import com.github.adnanrangrej.focusmodes.domain.repository.FocusModesRepository
 import com.github.adnanrangrej.focusmodes.domain.repository.PomodoroTimerRepository
+import com.github.adnanrangrej.focusmodes.domain.repository.TriggersRepository
 import com.github.adnanrangrej.focusmodes.domain.repository.UserStatsRepository
 import dagger.Module
 import dagger.Provides
@@ -39,5 +43,14 @@ object RepositoryModule {
     @Singleton
     fun provideUserStatsRepository(sessionDao: SessionDao): UserStatsRepository {
         return UserStatsRepositoryImpl(sessionDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTriggersRepository(
+        triggerDao: TriggerDao,
+        smartTriggerScheduler: SmartTriggerScheduler
+    ): TriggersRepository {
+        return TriggersRepositoryImpl(triggerDao, smartTriggerScheduler)
     }
 }
